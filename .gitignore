@@ -1,0 +1,4 @@
+.env
+.vscode/sftp.json
+.DS_Store
+*.log

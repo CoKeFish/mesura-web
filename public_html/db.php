@@ -3,12 +3,15 @@
 session_start();
 
 $conn = mysqli_connect(
-    '195.179.238.103',
-    'u978607264_cokefish',
-    '7B7vCu*UzgWhDBY',
-    'u978607264_bd'
+    getenv('DB_HOST'),
+    getenv('DB_USER'),
+    getenv('DB_PASSWORD'),
+    getenv('DB_NAME')
 );
 
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 
 ?>
 
