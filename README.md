@@ -1,15 +1,15 @@
-# Mesura Web - IoT Biometric Sensors Dashboard
+# Mesura Web - Biometric music recommendation system
 
-Web application for real-time visualization and monitoring of biometric sensor data from the Mesura IoT project. This dashboard displays data collected from GSR (Galvanic Skin Response) and temperature sensors using interactive charts.
+Web application for real-time visualization and music recommendation based on biometric sensor data from the Mesura IoT project. The system analyzes GSR (Galvanic Skin Response) and temperature readings to recommend music genres that match the user's emotional state.
 
 This repository contains the **web application** component of the Mesura system. The sensor hardware and firmware can be found in the [Mesura Firmware](https://github.com/CoKeFish/mesura-firmware) repository.
 
-## Project Architecture
+## Project architecture
 
 Mesura consists of two main components working together:
 
 1. **[Mesura Firmware](https://github.com/CoKeFish/mesura-firmware)** - Hardware implementations for Arduino, ESP32, and Raspberry Pi that collect biometric sensor data
-2. **Mesura Web** (this repository) - PHP/MySQL web application that receives, stores, and visualizes the sensor data in real-time
+2. **Mesura Web** (this repository) - PHP/MySQL web application that receives, stores, visualizes sensor data, and recommends music based on biometric readings
 
 ```
 ┌─────────────────┐
@@ -33,13 +33,48 @@ Mesura consists of two main components working together:
          │
          │ JSON API
          ▼
-┌─────────────────┐
-│ Web Dashboard   │
-│ (Chart.js)      │
-└─────────────────┘
+┌─────────────────┐     ┌──────────────────┐
+│ Web Dashboard   │────▶│ Music            │
+│ (Chart.js)      │     │ Recommendation   │
+│                 │◀────│ System           │
+└─────────────────┘     └──────────────────┘
+    Visualizes              Suggests genre
+    sensor data            based on biometrics
 ```
 
-## Technologies Used
+## Music recommendation system
+
+Mesura uses biometric data to recommend music genres that match the user's current emotional and physical state:
+
+### How it works
+
+**GSR (Galvanic Skin Response) analysis:**
+- **High values (>510)**: Indicates stress, anxiety, or excitement → Recommends **relaxing/ambient music**
+- **Medium values (490-510)**: Normal state → Recommends **pop/indie music**
+- **Low values (<490)**: Calm, relaxed state → Recommends **classical/jazz music**
+
+**Temperature analysis:**
+- **High temperature (>25.5°C)**: Physical activation → Recommends **energetic music** (rock, electronic)
+- **Normal temperature (24.5-25.5°C)**: Balanced state → Recommends **balanced genres** (pop, indie)
+- **Low temperature (<24.5°C)**: Relaxed state → Recommends **calm music** (ambient, acoustic)
+
+The system combines both readings to provide more accurate recommendations:
+- **High GSR + High temp** → Energetic/upbeat music to match the active state
+- **High GSR + Low temp** → Calming music to reduce stress
+- **Low GSR + Normal temp** → Background music for focus and productivity
+
+### Music genres supported
+
+- Ambient / Relaxation
+- Classical / Jazz
+- Pop / Indie
+- Rock / Electronic
+- Acoustic / Folk
+- Focus / Study music
+
+*Note: The basic implementation suggests music genres based on sensor thresholds. Full integration with music streaming APIs (Spotify, YouTube) can be added as an enhancement.*
+
+## Technologies used
 
 - **Backend**: PHP 7.4+
 - **Database**: MySQL 5.7+ / MariaDB
@@ -49,9 +84,9 @@ Mesura consists of two main components working together:
   - Vanilla JavaScript (AJAX data fetching)
 - **Deployment**: Compatible with cPanel/Hostinger hosting
 
-## Database Structure
+## Database structure
 
-### DataIoT Table
+### DataIoT table
 Stores sensor readings from IoT devices:
 
 | Field | Type | Description |
@@ -61,7 +96,7 @@ Stores sensor readings from IoT devices:
 | Temp_Sensor | FLOAT | Temperature sensor reading (°C) |
 | DateRead | DATETIME | Timestamp of the reading |
 
-### info_login Table
+### info_login table
 User authentication information:
 
 | Field | Type | Description |
@@ -73,7 +108,8 @@ User authentication information:
 
 ## Features
 
-- Real-time data visualization with interactive line charts
+- Real-time biometric data visualization with interactive line charts
+- Music genre recommendation based on GSR and temperature readings
 - Historical data table view
 - User authentication system (login/registration)
 - Responsive design with Bootstrap
@@ -92,14 +128,14 @@ User authentication information:
 
 ## Installation
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/CoKeFish/mesura-web.git
 cd mesura-web
 ```
 
-### 2. Configure Database Connection
+### 2. Configure database connection
 
 Copy the environment template and configure your database credentials:
 
@@ -116,7 +152,7 @@ DB_PASSWORD=your_database_password
 DB_NAME=your_database_name
 ```
 
-### 3. Create Database and Import Schema
+### 3. Create database and import schema
 
 Create a new MySQL database and import the schema:
 
@@ -128,7 +164,7 @@ Or using phpMyAdmin:
 1. Create a new database
 2. Import `database_schema.sql` file
 
-### 4. Set Environment Variables
+### 4. Set environment variables
 
 If your hosting environment doesn't support .env files natively, you'll need to set environment variables through your hosting control panel (cPanel, Plesk, etc.) or configure them in your server's configuration.
 
@@ -151,7 +187,7 @@ export DB_NAME="your_database"
 php -S localhost:8000 -t public_html
 ```
 
-### 5. Upload to Server
+### 5. Upload to server
 
 If deploying to a hosting service (Hostinger, cPanel, etc.):
 
@@ -159,13 +195,13 @@ If deploying to a hosting service (Hostinger, cPanel, etc.):
 2. Set environment variables through your hosting control panel
 3. Ensure proper file permissions (644 for files, 755 for directories)
 
-### 6. Access the Application
+### 6. Access the application
 
 Open your browser and navigate to:
 - Local: `http://localhost:8000`
 - Production: `https://yourdomain.com`
 
-## Project Structure
+## Project structure
 
 ```
 mesura-web/
@@ -190,7 +226,7 @@ mesura-web/
         └── footer.php        # Common footer template
 ```
 
-## API Endpoints
+## API endpoints
 
 ### GET /json_enco.php
 
@@ -205,7 +241,7 @@ Returns sensor data in JSON format for visualization.
 }
 ```
 
-## Security Considerations
+## Security considerations
 
 - Database credentials are stored in environment variables, not in code
 - The `.env` file is excluded from version control via `.gitignore`
@@ -214,14 +250,14 @@ Returns sensor data in JSON format for visualization.
 
 ## Development
 
-### Local Setup with XAMPP/WAMP
+### Local setup with XAMPP/WAMP
 
 1. Install XAMPP or WAMP
 2. Copy project to `htdocs/` or `www/` directory
 3. Configure environment variables
 4. Access via `http://localhost/mesura-web/public_html/`
 
-### Connecting IoT Devices
+### Connecting IoT devices
 
 To send data from your IoT sensors to this dashboard:
 
@@ -237,7 +273,7 @@ Example POST request:
 }
 ```
 
-## Related Projects
+## Related projects
 
 - [Mesura Firmware](https://github.com/CoKeFish/mesura-firmware) - IoT sensor implementations for Arduino, ESP32, and Raspberry Pi
 
@@ -256,3 +292,4 @@ This project was developed as part of an IoT course.
 - [Chart.js](https://www.chartjs.org/) for data visualization
 - [Bootstrap](https://getbootstrap.com/) for UI framework
 - PulseSensor.com for sensor references
+- Biometric research on stress detection and emotional states
