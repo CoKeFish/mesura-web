@@ -76,15 +76,92 @@ function addNewDataPoint() {
     return { newGSR, newTemp, newTime };
 }
 
+// Get music recommendation based on biometric data
+function getMusicRecommendation(gsr, temp) {
+    let genre = "";
+    let reason = "";
+    let icon = "🎵";
+    let track = "";
+    let artist = "";
+    let emotionalState = "";
+    
+    // Analyze GSR and Temperature to recommend music
+    if (gsr > 510) {
+        // High stress/arousal
+        emotionalState = "Stressed";
+        if (temp > 25.5) {
+            genre = "Energetic Rock";
+            reason = "High energy detected. Time to rock out!";
+            icon = "🎸";
+            track = "Thunder";
+            artist = "Imagine Dragons";
+        } else {
+            genre = "Ambient / Relaxation";
+            reason = "High stress detected. Let's calm down with soothing music.";
+            icon = "🧘";
+            track = "Weightless";
+            artist = "Marconi Union";
+        }
+    } else if (gsr > 490) {
+        // Normal state
+        emotionalState = "Balanced";
+        if (temp > 25.3) {
+            genre = "Pop / Indie";
+            reason = "You're in a good mood! Enjoy some upbeat tunes.";
+            icon = "🎤";
+            track = "Feel Good Inc.";
+            artist = "Gorillaz";
+        } else {
+            genre = "Acoustic / Folk";
+            reason = "Balanced state perfect for melodic acoustic music.";
+            icon = "🎻";
+            track = "Holocene";
+            artist = "Bon Iver";
+        }
+    } else {
+        // Relaxed/calm state
+        emotionalState = "Calm";
+        if (temp < 24.8) {
+            genre = "Classical / Jazz";
+            reason = "Very relaxed state. Perfect for classical melodies.";
+            icon = "🎹";
+            track = "Clair de Lune";
+            artist = "Claude Debussy";
+        } else {
+            genre = "Lo-fi / Study";
+            reason = "Calm and focused. Great for productivity music.";
+            icon = "📚";
+            track = "Lofi Hip Hop Radio";
+            artist = "ChilledCow";
+        }
+    }
+    
+    return { genre, reason, icon, track, artist, emotionalState };
+}
+
 // Update statistics cards
 function updateStatistics() {
-    const avgGSR = (sensorData.GSR_Sensor.reduce((a, b) => a + b, 0) / sensorData.GSR_Sensor.length).toFixed(2);
-    const avgTemp = (sensorData.Temp_Sensor.reduce((a, b) => a + b, 0) / sensorData.Temp_Sensor.length).toFixed(2);
+    // Get current (latest) values instead of average
+    const currentGSR = sensorData.GSR_Sensor[sensorData.GSR_Sensor.length - 1].toFixed(2);
+    const currentTemp = sensorData.Temp_Sensor[sensorData.Temp_Sensor.length - 1].toFixed(2);
     const totalReadings = sensorData.GSR_Sensor.length;
     
-    document.getElementById('avg-gsr').textContent = avgGSR;
-    document.getElementById('avg-temp').textContent = avgTemp + ' °C';
+    document.getElementById('avg-gsr').textContent = currentGSR;
+    document.getElementById('avg-temp').textContent = currentTemp + ' °C';
     document.getElementById('total-readings').textContent = totalReadings;
+    
+    // Get music recommendation based on current values
+    const recommendation = getMusicRecommendation(parseFloat(currentGSR), parseFloat(currentTemp));
+    
+    // Update emotional state
+    document.getElementById('emotional-state').textContent = recommendation.emotionalState;
+    
+    // Update music recommendation
+    document.getElementById('recommended-genre').textContent = recommendation.genre;
+    document.getElementById('recommendation-reason').textContent = recommendation.reason;
+    document.getElementById('genre-icon').textContent = recommendation.icon;
+    document.getElementById('current-track').textContent = recommendation.track;
+    document.getElementById('current-artist').textContent = recommendation.artist;
     
     // Pulse animation
     const indicators = document.querySelectorAll('.stats-value');

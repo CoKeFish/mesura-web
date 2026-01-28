@@ -65,25 +65,60 @@
     
     <!-- Statistics Cards -->
     <div class="row mb-4">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="stats-card">
-                <div class="stats-label">Average GSR</div>
+                <div class="stats-label">Current GSR</div>
                 <div class="stats-value" id="avg-gsr">--</div>
                 <small class="text-muted">Galvanic Skin Response</small>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="stats-card">
-                <div class="stats-label">Average Temperature</div>
+                <div class="stats-label">Current Temperature</div>
                 <div class="stats-value" id="avg-temp">--</div>
                 <small class="text-muted">Celsius (°C)</small>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="stats-card">
                 <div class="stats-label">Total Readings</div>
                 <div class="stats-value" id="total-readings">--</div>
                 <small class="text-muted">Sensor measurements</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-label">Emotional State</div>
+                <div class="stats-value" id="emotional-state" style="font-size: 1.5rem;">--</div>
+                <small class="text-muted">Based on biometrics</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music Recommendation Card -->
+    <div class="card mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+        <div class="card-header" style="background: transparent; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <h5 class="mb-0">🎵 Music Recommendation</h5>
+        </div>
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h3 id="recommended-genre" style="margin-bottom: 10px;">Loading...</h3>
+                    <p id="recommendation-reason" style="opacity: 0.9; margin-bottom: 15px;">Analyzing your biometric data...</p>
+                    <div class="music-player" style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <button class="btn btn-light btn-sm" onclick="alert('This is a demo - music playback not implemented')" style="border-radius: 50%; width: 40px; height: 40px;">▶️</button>
+                            <div style="flex: 1;">
+                                <div style="font-weight: bold;" id="current-track">Select a track</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;" id="current-artist">Demo Player</div>
+                            </div>
+                            <div style="font-size: 0.9rem;">🔊</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div style="font-size: 5rem; opacity: 0.3;" id="genre-icon">🎵</div>
+                </div>
             </div>
         </div>
     </div>
