@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesura - IoT Biometric Sensors Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js" integrity="sha512-d6nObkPJgV791iTGuBoVC9Aa2iecqzJRE0Jiqvk85BhLHAPhWqkuBiQb1xz2jvuHNqHLYoN3ymPfpiB1o+Zgpw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <style>
+        .demo-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .demo-banner .badge {
+            background-color: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .stats-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stats-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a href="index.html" class="navbar-brand">Mesura IoT Dashboard</a>
+        <span class="navbar-text text-white">
+            <small>Demo Version</small>
+        </span>
+    </div>
+</nav>
+
+<div class="demo-banner">
+    <span class="badge">🎮 DEMO MODE</span>
+    <span style="margin: 0 15px;">•</span>
+    This is a demonstration with simulated sensor data
+    <span style="margin: 0 15px;">•</span>
+    <a href="https://github.com/CoKeFish/mesura-firmware" style="color: white; text-decoration: underline;">View Real Implementation</a>
+</div>
+
+<div class="container mt-4">
+    <h1 class="mb-4">Biometric Sensor Data Dashboard</h1>
+    
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="stats-card">
+                <div class="stats-label">Average GSR</div>
+                <div class="stats-value" id="avg-gsr">--</div>
+                <small class="text-muted">Galvanic Skin Response</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <div class="stats-label">Average Temperature</div>
+                <div class="stats-value" id="avg-temp">--</div>
+                <small class="text-muted">Celsius (°C)</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <div class="stats-label">Total Readings</div>
+                <div class="stats-value" id="total-readings">--</div>
+                <small class="text-muted">Sensor measurements</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Sensor Data Visualization</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="grafica" style="max-height: 400px;"></canvas>
+        </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Recent Sensor Readings</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>GSR Sensor</th>
+                            <th>Temperature Sensor (°C)</th>
+                            <th>Date & Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-table">
+                        <tr>
+                            <td colspan="3" class="text-center">Loading data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Info -->
+    <div class="mt-5 mb-4 text-center text-muted">
+        <hr>
+        <p>
+            <strong>Mesura IoT Project</strong> - Biometric Sensors Dashboard<br>
+            Hardware: <a href="https://github.com/CoKeFish/mesura-firmware" target="_blank">mesura-firmware</a> | 
+            Web App: <a href="https://github.com/CoKeFish/mesura-web" target="_blank">mesura-web</a><br>
+            <small>Developed by Rodion Romanovich Tabares Correa - 2022</small>
+        </p>
+    </div>
+</div>
+
+<script type="text/javascript" src="script.js"></script>
+
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    
+</body>
+</html>
