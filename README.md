@@ -24,38 +24,17 @@ graph TD
     F -->|Suggest genre| G[User Interface]
 ```
 
-### Music recommendation logic
-
-The system analyzes biometric patterns to suggest appropriate music:
-
-**GSR analysis:**
-- High values (>510) → Stress/anxiety → Relaxing music (ambient, classical)
-- Medium values (490-510) → Normal state → Balanced music (pop, indie)
-- Low values (<490) → Calm state → Focus music (jazz, acoustic)
-
-**Temperature analysis:**
-- High temp (>25.5°C) → Active state → Energetic music (rock, electronic)
-- Normal temp (24.5-25.5°C) → Balanced → Varied genres
-- Low temp (<24.5°C) → Relaxed → Calm music (ambient, lo-fi)
-
-The system combines both readings for more accurate recommendations.
-
 ## Technologies used
 
 ### Backend
 - PHP 7.4+
-- MySQL 5.7+ / MariaDB
-- Environment variables for configuration
+- MySQL 5.7+ 
 
 ### Frontend
 - HTML5, CSS3, JavaScript (ES6+)
 - Bootstrap 5.2.1
 - Chart.js 3.9.1
 - AJAX for real-time updates
-
-### Deployment
-- Compatible with cPanel/Hostinger hosting
-- Supports XAMPP/WAMP for local development
 
 ## Database schema
 
@@ -86,22 +65,6 @@ erDiagram
   "DateRead": ["2022-10-15 10:30:00", "2022-10-15 10:31:00", ...]
 }
 ```
-
-## Features
-
-- Real-time biometric data visualization
-- Music genre recommendation based on emotional state
-- Historical data tracking
-- User authentication system
-- Responsive design
-- RESTful JSON API
-
-## Setup
-
-1. Clone repository and configure database credentials in `.env`
-2. Import `database_schema.sql` to MySQL
-3. Configure environment variables (see `.env.example`)
-4. Deploy to web server
 
 ## Demo
 
