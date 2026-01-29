@@ -1,13 +1,6 @@
 {
   "version": 2,
-  "public": true,
-  "cleanUrls": true,
-  "trailingSlash": false,
   "routes": [
-    {
-      "src": "/",
-      "dest": "/public_html/index.html"
-    },
     {
       "src": "/(.*)",
       "dest": "/public_html/$1"
